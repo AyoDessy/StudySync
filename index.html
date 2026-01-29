@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Study Sync</title>
 
     <!-- Favicon -->
     <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
@@ -15,6 +14,8 @@
     <link rel="icon" type="image/png" sizes="192x192" href="android-chrome-192x192.png">
     <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png">
     
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Login - Study Sync</title>
     <style>
         :root {
             --primary: #4361ee;
@@ -161,39 +162,125 @@
                 font-size: 1.8rem;
             }
         }
+
+        .password-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .password-input {
+            width: 100%;
+            padding-right: 40px; /* Space for the toggle button */
+            box-sizing: border-box;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 70%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 4px;
+            color: #666;
+            transition: color 0.2s ease;
+        }
+
+        .password-toggle:hover {
+            color: #333;
+        }
+
+        .password-toggle:focus {
+            outline: 2px solid #4D90FE;
+            outline-offset: 2px;
+            border-radius: 4px;
+        }
+
+        .icon-hide {
+            display: none;
+        }
+
+        .password-input[type="text"] + .password-toggle .icon-show {
+            display: none;
+        }
+
+        .password-input[type="text"] + .password-toggle .icon-hide {
+            display: block;
+        }
+
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="login-container">
+    <div class="login-container">    
         <div class="login-card">
             <div class="logo">
                 <i class="fas fa-graduation-cap"></i>
                 <span>Study Sync</span>
             </div>
             
-            <form id="loginForm" action="content.html" method="get">
+            <form id="loginForm">
+                <h2 style="margin-bottom: 1.5rem;">Login</h2>
                 <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" name="firstName" required>
+                    <label for="loginEmail">Email:</label>
+                    <input type="email" id="loginEmail" required>
                 </div>
-                
-                <div class="form-group">
-                    <label for="lastName">Last Name</label>
-                    <input type="text" id="lastName" name="lastName" required>
+                <div class="form-group password-input-wrapper">
+                    <label for="loginPassword">Password:</label>
+                    <input type="password" id="loginPassword" class="password-input" required>
+                    <button type="button" class="password-toggle" aria-label="Show password">
+                        <svg class="icon-show" width="20" height="20" viewBox="0 0 20 20">
+                            <path d="M10 4C4 4 1 10 1 10s3 6 9 6 9-6 9-6-3-6-9-6zm0 10a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                        </svg>
+                        <svg class="icon-hide" width="20" height="20" viewBox="0 0 20 20">
+                            <path d="M15.8 3.7C14 2.5 12 2 10 2 4 2 1 8 1 8s1.5 3.1 4.2 5.2l-2.5 2.5 1.4 1.4L18.6 2.3l-1.4-1.4-1.4 2.8zM10 6c2.2 0 4 1.8 4 4 0 .5-.1 1-.3 1.4l2.5 2.5c1.2-1.3 2-2.9 2.3-3.9 0 0-3-6-9-6-1.2 0-2.3.3-3.3.7l2.2 2.2c.4-.2.9-.3 1.4-.3zm-4.4.6L7 8.6c-.1.2-.1.5-.1.7 0 2.2 1.8 4 4 4 .3 0 .5 0 .7-.1l1.4 1.4C12.1 15.2 11.1 15.5 10 15.5c-4.1 0-7.5-3.4-7.5-7.5 0-1.1.3-2.1.9-3z"/>
+                        </svg>
+                    </button>
                 </div>
-                
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <input type="email" id="email" name="email" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="major">Major</label>
-                    <input type="text" id="major" name="major" required>
-                </div>
-                
+                <p style="margin: 0.5rem 0;text-align: center;">Don't have an account?<a href="#" style="margin-left: 5px;text-decoration: none;" onclick="showRegisterForm()">Register here</a></p>
                 <button type="submit" class="login-btn">Login</button>
+            </form>
+
+            <form id="registerForm" style="display: none;">
+                <h2 style="margin-bottom: 1.5rem;">Register</h2>
+                <div class="form-group">
+                    <label for="firstName">Full Name</label>
+                    <input type="text" id="firstName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="regEmail">Email Address</label>
+                    <input type="email" id="regEmail" required>
+                </div>
+
+                <div class="form-group password-input-wrapper">
+                    <label for="regPassword">Password:</label>
+                    <input type="password" id="regPassword" class="password-input" required>
+                    <button type="button" class="password-toggle" aria-label="Show password">
+                        <svg class="icon-show" width="20" height="20" viewBox="0 0 20 20">
+                            <path d="M10 4C4 4 1 10 1 10s3 6 9 6 9-6 9-6-3-6-9-6zm0 10a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                        </svg>
+                        <svg class="icon-hide" width="20" height="20" viewBox="0 0 20 20">
+                            <path d="M15.8 3.7C14 2.5 12 2 10 2 4 2 1 8 1 8s1.5 3.1 4.2 5.2l-2.5 2.5 1.4 1.4L18.6 2.3l-1.4-1.4-1.4 2.8zM10 6c2.2 0 4 1.8 4 4 0 .5-.1 1-.3 1.4l2.5 2.5c1.2-1.3 2-2.9 2.3-3.9 0 0-3-6-9-6-1.2 0-2.3.3-3.3.7l2.2 2.2c.4-.2.9-.3 1.4-.3zm-4.4.6L7 8.6c-.1.2-.1.5-.1.7 0 2.2 1.8 4 4 4 .3 0 .5 0 .7-.1l1.4 1.4C12.1 15.2 11.1 15.5 10 15.5c-4.1 0-7.5-3.4-7.5-7.5 0-1.1.3-2.1.9-3z"/>
+                        </svg>
+                    </button>
+                </div>
+                    
+                <div class="form-group password-input-wrapper">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" class="password-input" required>
+                    <button type="button" class="password-toggle" aria-label="Show password">
+                        <svg class="icon-show" width="20" height="20" viewBox="0 0 20 20">
+                            <path d="M10 4C4 4 1 10 1 10s3 6 9 6 9-6 9-6-3-6-9-6zm0 10a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm0-6a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/>
+                        </svg>
+                        <svg class="icon-hide" width="20" height="20" viewBox="0 0 20 20">
+                            <path d="M15.8 3.7C14 2.5 12 2 10 2 4 2 1 8 1 8s1.5 3.1 4.2 5.2l-2.5 2.5 1.4 1.4L18.6 2.3l-1.4-1.4-1.4 2.8zM10 6c2.2 0 4 1.8 4 4 0 .5-.1 1-.3 1.4l2.5 2.5c1.2-1.3 2-2.9 2.3-3.9 0 0-3-6-9-6-1.2 0-2.3.3-3.3.7l2.2 2.2c.4-.2.9-.3 1.4-.3zm-4.4.6L7 8.6c-.1.2-.1.5-.1.7 0 2.2 1.8 4 4 4 .3 0 .5 0 .7-.1l1.4 1.4C12.1 15.2 11.1 15.5 10 15.5c-4.1 0-7.5-3.4-7.5-7.5 0-1.1.3-2.1.9-3z"/>
+                        </svg>
+                    </button>
+                </div>
+                <p style="margin: 0.5rem 0;text-align: center;">Already have an account?<a href="#" style="margin-left: 5px;text-decoration: none;" onclick="showLoginForm()">Login here</a></p>
+                <button type="submit" class="login-btn">Register</button>
             </form>
             
             <div class="footer-text">
@@ -203,40 +290,137 @@
     </div>
     
     <script>
+        // Initialize password toggle functionality for all password fields
+        function initializePasswordToggles() {
+            document.querySelectorAll('.password-toggle').forEach(button => {
+                button.addEventListener('click', function() {
+                    const passwordInput = this.parentElement.querySelector('.password-input');
+                    const isPassword = passwordInput.type === 'password';
+                    
+                    // Toggle input type
+                    passwordInput.type = isPassword ? 'text' : 'password';
+                    
+                    // Update aria-label for accessibility
+                    this.setAttribute('aria-label', 
+                    isPassword ? 'Hide password' : 'Show password'
+                    );
+                });
+            });
+        }
+        
+        // Form switching functions
+        function showLoginForm() {
+            document.getElementById('registerForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('loginEmail').focus();
+        }
+        
+        function showRegisterForm() {
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('registerForm').style.display = 'block';
+            document.getElementById('firstName').focus();
+        }
+        
+        // Login form handler
         document.getElementById('loginForm').addEventListener('submit', function(e) {
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const major = document.getElementById('major').value.trim();
+            e.preventDefault();
             
-            if(firstName && lastName && email && major) {
-                // Store user data in localStorage for dashboard use
-                const userData = {
-                    firstName,
-                    lastName,
-                    email,
-                    major,
-                    initials: (firstName.charAt(0) + lastName.charAt(0)).toUpperCase(),
-                    loginTime: new Date().toISOString()
-                };
-                localStorage.setItem('currentUser', JSON.stringify(userData));
-                
-                // Add to users list
-                let users = JSON.parse(localStorage.getItem('users')) || [];
-                const userExists = users.some(u => u.email === email);
-                if(!userExists) {
-                    users.push(userData);
-                    localStorage.setItem('users', JSON.stringify(users));
-                }
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+            
+            if (!email || !password) {
+                alert('Please enter both email and password');
+                return;
             }
+            
+            // Check if user exists in localStorage
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => u.email === email);
+            
+            if (!user) {
+                alert('User not found. Please register first.');
+                return;
+            }
+            
+            // In a real app, you would verify the password here
+            // For this demo, we'll assume password is correct if user exists
+            
+            // Store current user data
+            const userData = {
+                ...user,
+                loginTime: new Date().toISOString()
+            };
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+            
+            // Redirect to content page
+            window.location.href = 'content.html';
         });
         
-        // Focus on first input field
+        // Register form handler
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('firstName').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            // Validation
+            if (!name || !email || !password || !confirmPassword) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match');
+                return;
+            }
+            
+            // Check if user already exists
+            let users = JSON.parse(localStorage.getItem('users')) || [];
+            const userExists = users.some(u => u.email === email);
+            
+            if (userExists) {
+                alert('User with this email already exists. Please login instead.');
+                return;
+            }
+            
+            // Create user data
+            const nameParts = name.split(' ');
+            const firstName = nameParts[0] || '';
+            const lastName = nameParts.slice(1).join(' ') || '';
+            
+            const userData = {
+                firstName: firstName,
+                lastName: lastName,
+                fullName: name,
+                email: email,
+                password: password, // Note: In a real app, NEVER store plain passwords!
+                initials: (firstName.charAt(0) + (lastName.charAt(0) || '')).toUpperCase(),
+                registrationTime: new Date().toISOString()
+            };
+            
+            // Store user data
+            users.push(userData);
+            localStorage.setItem('users', JSON.stringify(users));
+            
+            // Store as current user
+            localStorage.setItem('currentUser', JSON.stringify({
+                ...userData,
+                loginTime: new Date().toISOString()
+            }));
+            
+            alert(`Registration successful! Welcome ${name}`);
+            
+            // Redirect to content page
+            window.location.href = 'content.html';
+        });
+        
+        // Initialize everything when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('firstName').focus();
+            initializePasswordToggles();
+            document.getElementById('loginEmail').focus();
         });
     </script>
 </body>
-
 </html>
-
